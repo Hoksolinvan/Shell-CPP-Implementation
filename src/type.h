@@ -12,6 +12,36 @@ namespace type{
     const std::set<std::string> cur_set = {"echo","exit","type","pwd"};
 
 
+    // std::string obtain_path(std::string_view input){
+    //   auto x = std::getenv("PATH");
+    //   if(!x) return "";
+
+    //   std::string env(x);
+    //   std::vector<std::string> paths = helper::splitter(env,':');
+
+    //    for(const auto& path: paths){
+
+    //         std::filesystem::path full = std::filesystem::path(path) / input;
+
+            
+    //         if(std::filesystem::exists(full)){
+
+    //             if(!access(full.c_str(),X_OK)){
+
+    //             return std::string(full);
+
+                    
+    //             }
+    //         }
+
+
+    //     }
+    //     return ": not found";
+
+
+    // }
+
+
     std::string file_traversal(std::string_view input){
         auto x = std::getenv("PATH");
         if(!x) return ": not found";
