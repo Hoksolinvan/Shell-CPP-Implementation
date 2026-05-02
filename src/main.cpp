@@ -1,11 +1,7 @@
 #include "echo.h"
-#include "helper.h"
 #include "type.h"
-#include <iostream>
-#include <string>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <filesystem>
+#include "helper.h"
+
 int main() {
   // Flush after every std::cout / std:cerr
   std::cout << std::unitbuf;
@@ -29,36 +25,10 @@ int main() {
         }
 
 
-        // if(type::is_executable(temp_vector[2])){
-
-
-        //   pid_t pid = fork();
-        // if (pid < 0) {
-        //   perror("fork failed");
-        //   continue;
-        // }
-        // if (pid == 0) {
-        //   std::vector<char *> argv;
-        //   for (size_t i = 0; i < temp_vector.size(); i++)
-        //     argv.push_back(temp_vector[i].data());
-        //   argv.push_back(nullptr);
-        //   execvp(argv[0], argv.data());
-        //   perror("exec failed");
-        //   _exit(1);
-        // } else {
-        //   int status;
-        //   wait(&status);
-        // }
-
-        //   continue;
-        // }
-        // else{
          type::type(temp_vector[2]);
-        // }
+      
         continue;
-        
-        
-        
+
       } else if (type::is_executable(temp_vector[0])) {
         pid_t pid = fork();
         if (pid < 0) {
