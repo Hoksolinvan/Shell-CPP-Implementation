@@ -80,7 +80,17 @@ inline std::vector<std::string> splitter(std::string input,char delimiter=' '){
     
     for(char c : input){
 
+        if(inner_backslash){
+             if(c=='\'' && quote_on){
+                continue;
+            }
+            word+=c;
+            inner_backslash = !inner_backslash;
+            continue;
+        }
+
          if(backslash){
+           
             word+=c;
             backslash = !backslash;
             continue;
@@ -90,18 +100,37 @@ inline std::vector<std::string> splitter(std::string input,char delimiter=' '){
             backslash = !backslash;
             continue;
         }
+        // else if(!quote_on && double_quote_on && c=='\\'){
+
+        // }
         else if((quote_on || double_quote_on) && c=='\\'){
+
+            if(quote_on){
+            word+=c;
+            }
             inner_backslash = !inner_backslash;
+            continue;
         }
 
+        
        
         
         
         if(c=='\"'){
             if(inner_backslash){
+
+
+                if(quote_on || double_quote_on){
+                    word+='\\';
+                }
                 word+=c;
                 inner_backslash = !inner_backslash;
                 continue;
+            }
+
+
+            if(quote_on){
+                word+='\"';
             }
             double_quote_on = !double_quote_on;
             continue;
