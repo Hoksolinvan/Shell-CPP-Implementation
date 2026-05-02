@@ -1,7 +1,6 @@
 #include "echo.h"
 #include "helper.h"
 #include "type.h"
-#include "cat.h"
 #include <iostream>
 #include <string>
 #include <sys/wait.h>
@@ -68,8 +67,11 @@ int main() {
         }
         if (pid == 0) {
           std::vector<char *> argv;
-          for (size_t i = 0; i < temp_vector.size(); i++)
+          for (size_t i = 0; i < temp_vector.size(); i++){
+            if(temp_vector[i]!=" "){
             argv.push_back(temp_vector[i].data());
+            }
+          }
           argv.push_back(nullptr);
           execvp(argv[0], argv.data());
           perror("exec failed");
@@ -87,9 +89,13 @@ int main() {
       }
       else if(temp_vector[0]=="cd"){
 
+        if(temp_vector[2] != "~" && !std::filesystem::exists(temp_vector[2])){
+          std::cerr << "cd: " << temp_vector[2] << ": No such file or directory" << std::endl;
+          continue;
+        }
      
 
-       if (temp_vector.size() < 3 || !std::filesystem::exists(temp_vector[1]) || temp_vector[1] == "~") {
+       if (temp_vector.size() < 3 || temp_vector[2] == "~") {
         auto x = std::getenv("HOME");
         try {
             std::filesystem::current_path(x);
@@ -101,19 +107,14 @@ int main() {
     }
     else {
         try {
-            std::filesystem::current_path(temp_vector[1]);
+            std::filesystem::current_path(temp_vector[2]);
         }
         catch (const std::filesystem::filesystem_error& e) {
             std::cerr << "cd: " << temp_vector[1] << ": No such file or directory" << std::endl;
         }
     }
-
-
       }
-      // else if(temp_vector[0]=="cat"){
-      //   cat(temp_vector);
-        
-      // }
+    
       else {
         std::cout << temp_vector[0] << ": command not found" << std::endl;
       }
