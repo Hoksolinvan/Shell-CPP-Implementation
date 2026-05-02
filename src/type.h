@@ -50,17 +50,14 @@ namespace type{
     for (const auto &path : paths) {
       std::filesystem::path full = std::filesystem::path(path) / input;
      
-      if (std::filesystem::exists(full) && !access(full.c_str(),X_OK)) {
+      if (std::filesystem::exists(full)) {
         
-        // if (!access(full.c_str(), X_OK)) {
+        if (!access(full.c_str(), X_OK)) {
 
-        //   // std::cout << input << "is" << " " << path << std::endl;
+         // std::cout << input << " is " << path << "/" << input << std::endl;
           
-        //   return true;
-        // }
-
-        std::cout << "pp" << std::endl;
-        return true;
+          return true;
+        }
 
       }
     }
@@ -79,17 +76,20 @@ namespace type{
                 return true;
             }
             std::string temp = file_traversal(input);
-            if(temp ==": not found"){
-              // "/vcpkg:/cmake/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-              if(is_executable(input)){
 
-                return true;
-              }
-              else{
-               
-                std::cout << input << temp << std::endl;
-              }
-              
+
+            if(temp!=": not found"){
+              std::cout << input << temp << std::endl;
+              return true;
+            }
+            else if(is_executable(input)){
+
+              // "/vcpkg:/cmake/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+             
+              return true;
+            }
+            else{
+              std::cout << input << ": not found" << std::endl;
             }
             
             
