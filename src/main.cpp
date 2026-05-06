@@ -1,5 +1,4 @@
 #include "echo.h"
-#include "type.h"
 #include "helper.h"
 
 int main() {
